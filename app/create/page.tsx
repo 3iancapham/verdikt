@@ -480,6 +480,36 @@ export default function CreateReview() {
           </div>
         </div>
 
+        {/* Media Buttons */}
+        <div className="flex justify-between items-center pb-4 mb-2 border-b border-gray-200">
+          <div className="flex space-x-4">
+            <button
+              type="button"
+              className="text-gray-500 hover:text-indigo-500 transition-colors"
+              onClick={handleCameraCapture}
+              aria-label="Take a photo with camera"
+            >
+              <Camera size={24} />
+            </button>
+            <button
+              type="button"
+              className="text-gray-500 hover:text-indigo-500 transition-colors"
+              onClick={handleFileUpload}
+              aria-label="Upload photo or video"
+            >
+              <ImageIcon size={24} />
+            </button>
+          </div>
+          <button
+            type="button"
+            className={`transition-colors ${isPrivate ? "text-indigo-500" : "text-gray-500"}`}
+            onClick={togglePrivacy}
+            aria-label={isPrivate ? "Private review (only visible to friends)" : "Public review"}
+          >
+            {isPrivate ? <Lock size={24} /> : <Unlock size={24} />}
+          </button>
+        </div>
+
         {/* Textarea moved here */}
         <Textarea
           placeholder="Share your recommendation, thoughts...."
@@ -518,36 +548,6 @@ export default function CreateReview() {
           capture="environment"
           className="hidden"
         />
-
-        {/* Media Buttons */}
-        <div className="flex justify-between items-center border-t border-gray-200 pt-4 mt-2">
-          <div className="flex space-x-4">
-            <button
-              type="button"
-              className="text-gray-500 hover:text-indigo-500 transition-colors"
-              onClick={handleCameraCapture}
-              aria-label="Take a photo with camera"
-            >
-              <Camera size={24} />
-            </button>
-            <button
-              type="button"
-              className="text-gray-500 hover:text-indigo-500 transition-colors"
-              onClick={handleFileUpload}
-              aria-label="Upload photo or video"
-            >
-              <ImageIcon size={24} />
-            </button>
-          </div>
-          <button
-            type="button"
-            className={`transition-colors ${isPrivate ? "text-indigo-500" : "text-gray-500"}`}
-            onClick={togglePrivacy}
-            aria-label={isPrivate ? "Private review (only visible to friends)" : "Public review"}
-          >
-            {isPrivate ? <Lock size={24} /> : <Unlock size={24} />}
-          </button>
-        </div>
 
         {/* Submit Button */}
         <Button
