@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { PlusCircle } from "lucide-react"
 import { useRouter } from "next/navigation"
 
-// Mock posts data with camp associations
+// Mock posts data with topic associations
 const allPosts = [
   {
     id: 1,
@@ -23,7 +23,7 @@ const allPosts = [
     likes: 124,
     comments: 124,
     content: "Just got my first pair of Nike Air Force 1s. So fresh and comfyyy",
-    camps: ["sneakers", "nike"],
+    topics: ["sneakers", "nike"],
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const allPosts = [
     likes: 0,
     comments: 0,
     content: "Anyone buy the new Tiffany dunks? Wondering if it's worth it! Would love to hear it all.",
-    camps: ["sneakers", "nike"],
+    topics: ["sneakers", "nike"],
   },
   {
     id: 3,
@@ -51,7 +51,7 @@ const allPosts = [
     likes: 124,
     comments: 124,
     content: "Anyone see the sneak peek teaser of season 5!? Guys I can NOT waittttt!!",
-    camps: ["netflix", "streaming", "tv-shows"],
+    topics: ["netflix", "streaming", "tv-shows"],
   },
   {
     id: 4,
@@ -64,7 +64,7 @@ const allPosts = [
     likes: 45,
     comments: 12,
     content: "Is it worth watching the new movie Lift that just got released? Trailer looks mehhh",
-    camps: ["netflix", "streaming"],
+    topics: ["netflix", "streaming"],
   },
   {
     id: 5,
@@ -77,7 +77,7 @@ const allPosts = [
     likes: 67,
     comments: 23,
     content: "Just finished my first reformer class! My core is on fire but it was amazing!",
-    camps: ["pilates"],
+    topics: ["pilates"],
   },
   {
     id: 6,
@@ -91,22 +91,22 @@ const allPosts = [
     likes: 231,
     comments: 87,
     content: "Finally got my hands on the Vision Pro. Mind = blown. The spatial computing is next level!",
-    camps: ["apple-vision-pro"],
+    topics: ["apple-vision-pro"],
   },
 ]
 
 export default function Home() {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState<string>("all")
-  const [joinedCamps, setJoinedCamps] = useState<string[]>([])
+  const [joinedTopics, setJoinedTopics] = useState<string[]>([])
   const [filteredPosts, setFilteredPosts] = useState(allPosts)
 
-  // Load joined camps from localStorage on component mount
+  // Load joined topics from localStorage on component mount
   useEffect(() => {
-    const storedCamps = localStorage.getItem("joinedCamps")
-    if (storedCamps) {
-      const camps = JSON.parse(storedCamps)
-      setJoinedCamps(camps)
+    const storedTopics = localStorage.getItem("joinedTopics")
+    if (storedTopics) {
+      const topics = JSON.parse(storedTopics)
+      setJoinedTopics(topics)
     }
   }, [])
 
@@ -126,18 +126,18 @@ export default function Home() {
   // Filter posts based on active tab
   useEffect(() => {
     if (activeTab === "all") {
-      // If no camps joined, show all posts
-      if (joinedCamps.length === 0) {
+      // If no topics joined, show all posts
+      if (joinedTopics.length === 0) {
         setFilteredPosts(allPosts)
       } else {
-        // If camps joined, show posts from joined camps
-        setFilteredPosts(allPosts.filter((post) => post.camps.some((camp) => joinedCamps.includes(camp))))
+        // If topics joined, show posts from joined topics
+        setFilteredPosts(allPosts.filter((post) => post.topics.some((topic) => joinedTopics.includes(topic))))
       }
     } else {
-      // Show posts from specific camp
-      setFilteredPosts(allPosts.filter((post) => post.camps.includes(activeTab)))
+      // Show posts from specific topic
+      setFilteredPosts(allPosts.filter((post) => post.topics.includes(activeTab)))
     }
-  }, [activeTab, joinedCamps])
+  }, [activeTab, joinedTopics])
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -163,11 +163,11 @@ export default function Home() {
           ))
         ) : (
           <div className="flex flex-col items-center justify-center p-8 text-center">
-            <p className="text-gray-500 mb-4">No posts in this camp yet.</p>
-            {joinedCamps.length === 0 && (
+            <p className="text-gray-500 mb-4">No posts in this topic yet.</p>
+            {joinedTopics.length === 0 && (
               <Button onClick={() => router.push("/explore")} className="flex items-center">
                 <PlusCircle size={16} className="mr-2" />
-                Join Camps
+                Join Topics
               </Button>
             )}
           </div>

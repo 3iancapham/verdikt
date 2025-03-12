@@ -3,72 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { PlusCircle } from "lucide-react"
-
-// Mock data for all available topics with engagement metrics
-const allTopics: Record<
-  string,
-  {
-    title: string
-    slug: string
-    memberCount: number
-    engagement?: number // Higher number means more user engagement
-  }
-> = {
-  netflix: {
-    title: "Netflix",
-    slug: "netflix",
-    memberCount: 15243,
-    engagement: 95,
-  },
-  pilates: {
-    title: "Pilates",
-    slug: "pilates",
-    memberCount: 8752,
-    engagement: 82,
-  },
-  sneakers: {
-    title: "Sneakers",
-    slug: "sneakers",
-    memberCount: 24891,
-    engagement: 98,
-  },
-  nike: {
-    title: "Nike",
-    slug: "nike",
-    memberCount: 32567,
-    engagement: 88,
-  },
-  "apple-vision-pro": {
-    title: "Apple Vision Pro",
-    slug: "apple-vision-pro",
-    memberCount: 9876,
-    engagement: 90,
-  },
-  festivals: {
-    title: "Festivals",
-    slug: "festivals",
-    memberCount: 18432,
-    engagement: 75,
-  },
-  podcasts: {
-    title: "Podcasts",
-    slug: "podcasts",
-    memberCount: 12543,
-    engagement: 80,
-  },
-  streaming: {
-    title: "Streaming",
-    slug: "streaming",
-    memberCount: 21345,
-    engagement: 85,
-  },
-  "tv-shows": {
-    title: "TV Shows",
-    slug: "tv-shows",
-    memberCount: 28976,
-    engagement: 92,
-  },
-}
+import { allTopics } from "@/lib/data/topics"
 
 export default function CategoryTabs() {
   const router = useRouter()
@@ -78,7 +13,7 @@ export default function CategoryTabs() {
 
   // Load joined topics from localStorage on component mount
   useEffect(() => {
-    const storedTopics = localStorage.getItem("joinedCamps")
+    const storedTopics = localStorage.getItem("joinedTopics")
     if (storedTopics) {
       setJoinedTopics(JSON.parse(storedTopics))
     }

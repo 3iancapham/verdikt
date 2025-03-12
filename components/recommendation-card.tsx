@@ -23,7 +23,7 @@ export default function RecommendationCard({ title, image, stats, slug }: Recomm
   useEffect(() => {
     if (!slug) return
 
-    const storedTopics = localStorage.getItem("joinedCamps")
+    const storedTopics = localStorage.getItem("joinedTopics")
     if (storedTopics) {
       const topics = JSON.parse(storedTopics)
       setIsFollowed(topics.includes(slug))
@@ -46,7 +46,7 @@ export default function RecommendationCard({ title, image, stats, slug }: Recomm
     setIsFollowed(newFollowState)
 
     // Update localStorage
-    const storedTopics = localStorage.getItem("joinedCamps")
+    const storedTopics = localStorage.getItem("joinedTopics")
     let topics = storedTopics ? JSON.parse(storedTopics) : []
 
     if (newFollowState) {
@@ -59,7 +59,7 @@ export default function RecommendationCard({ title, image, stats, slug }: Recomm
       topics = topics.filter((topic: string) => topic !== slug)
     }
 
-    localStorage.setItem("joinedCamps", JSON.stringify(topics))
+    localStorage.setItem("joinedTopics", JSON.stringify(topics))
 
     // Dispatch storage event to update other components
     window.dispatchEvent(new Event("storage"))

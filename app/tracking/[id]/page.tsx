@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { ArrowLeft, Package, MapPin, Truck } from "lucide-react"
+import { use } from "react"
 
 // Mock tracking data
 const mockTrackingData = {
@@ -61,9 +62,10 @@ const mockTrackingData = {
   },
 }
 
-export default function TrackingPage({ params }: { params: { id: string } }) {
+export default function TrackingPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
-  const tracking = mockTrackingData[params.id as keyof typeof mockTrackingData]
+  const { id } = use(params)
+  const tracking = mockTrackingData[id as keyof typeof mockTrackingData]
 
   if (!tracking) {
     return (

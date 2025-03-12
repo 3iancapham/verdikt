@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { ArrowLeft, Star, Users, Heart, Package, Bookmark } from "lucide-react"
@@ -158,14 +158,15 @@ const profileData: Record<
   },
 }
 
-export default function ProfilePage({ params }: { params: { username: string } }) {
+export default function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState("reviews")
   const [joinedTopics, setJoinedTopics] = useState<string[]>([])
   const [savedPosts, setSavedPosts] = useState<any[]>([])
 
   // Convert URL-friendly username to lookup key
-  const profileKey = params.username.toLowerCase()
+  const { username } = use(params)
+  const profileKey = username.toLowerCase()
   const profile = Object.values(profileData).find(
     (p) =>
       p.username.toLowerCase().replace(/\s+/g, "-") === profileKey ||
@@ -174,7 +175,7 @@ export default function ProfilePage({ params }: { params: { username: string } }
 
   // Load joined topics from localStorage on component mount
   useEffect(() => {
-    const storedTopics = localStorage.getItem("joinedCamps")
+    const storedTopics = localStorage.getItem("joinedTopics")
     if (storedTopics) {
       setJoinedTopics(JSON.parse(storedTopics))
     }
@@ -274,7 +275,7 @@ export default function ProfilePage({ params }: { params: { username: string } }
               <Package size={20} />
             </div>
             <button
-              onClick={() => router.push(`/profile/${params.username}/orders`)}
+              onClick={() => router.push(`/profile/${username}/orders`)}
               className="text-lg font-bold hover:text-indigo-500 transition-colors"
             >
               {profile.orderCount || 0}
